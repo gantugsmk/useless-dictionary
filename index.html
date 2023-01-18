@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mongolian Dictionary</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div id="dictionary-reader">
+    <label for="search-word">Search Word:</label>
+    <input type="text" id="search-word">
+    <button id="search-button">Search</button>
+  </div>
+  <script>
+    let dictionary;
+    const searchWordInput = document.getElementById('search-word');
+    const searchButton = document.getElementById('search-button');
+    const wordList = document.getElementById('word-list');
+
+    searchButton.addEventListener('click',() => {
+        let searchWord = searchWordInput.value.toLowerCase();
+        redirectToSearchResults(searchWord);
+    });
+
+    function redirectToSearchResults(searchWord) {
+        // store the search word in the session storage
+        sessionStorage.setItem('searchWord', searchWord);
+        // redirect to the search results page
+        window.location.href = 'search-results.html';
+    }
+
+    fetch('dictionary.json')
+    .then(response => response.json())
+    .then(data => {
+        dictionary = data;
+        displayDictionary(dictionary);
+    })
+    .catch(error => console.log('Error:', error))
+
+    function displayDictionary(dictionary) {
+      wordList.innerHTML = '';
+      for (let word in dictionary) {
+        const newWord = document.createElement('div');
+        newWord.innerHTML = `<strong>${word}</strong> - ${dictionary[word]}`;
+        wordList.appendChild(newWord);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+/* Add some basic styling to the page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the search results container */
+#search-results {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Style the results list container */
+#results-list {
+    margin-top: 20px;
+}
+
+/* Style the individual results in the list */
+#results-list div {
+    margin-bottom: 10px;
+}

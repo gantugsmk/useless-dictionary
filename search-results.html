@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+  <link rel="stylesheet" type="text/css" href="stylesr.css">
+</head>
+<body>
+  <div id="search-results">
+    <h1>Search Results</h1>
+    <div id="results-list"></div>
+  </div>
+  <script>
+    let dictionary;
+    const searchWord = sessionStorage.getItem('searchWord');
+    const resultsList = document.getElementById('results-list');
+
+    fetch('dictionary.json')
+    .then(response => response.json())
+    .then(data => {
+        dictionary = data;
+        let filteredWords = filterWords(searchWord);
+        displayResults(filteredWords);
+    })
+    .catch(error => console.log('Error:', error))
+
+    function filterWords(searchWord) {
+        // filter the words from the dictionary that match the search term
+        return Object.keys(dictionary).filter(word => word.toLowerCase().includes(searchWord))
+    }
+
+    function displayResults(filteredWords) {
+        // display the filtered words on the page
+        for (let word of filteredWords) {
+            const newWord = document.createElement('div');
+            newWord.innerHTML = `<strong>${word}</strong> - ${dictionary[word]}`;
+            resultsList.appendChild(newWord);
+        }
+    }
+  </script>
+</body>
+</html>
